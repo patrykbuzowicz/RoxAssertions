@@ -2,10 +2,15 @@
 {
     internal class ExpectationBuilderNegated<T> : ExpectationBuilder<T>
     {
-        public ExpectationBuilderNegated(T value)
-            : base(value)
+        private ExpectationBuilder<T> _innerBuilder;
+
+        public ExpectationBuilderNegated(ExpectationBuilder<T> builder)
+            : base(builder.Value)
         {
+            _innerBuilder = builder;
         }
+
+        internal override bool IsNegated => !_innerBuilder.IsNegated;
 
         internal override void Process(bool result, string message)
         {

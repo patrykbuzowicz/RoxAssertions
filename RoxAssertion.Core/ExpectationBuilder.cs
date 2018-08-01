@@ -4,6 +4,8 @@
     {
         internal T Value { get; }
 
+        internal virtual bool IsNegated { get; } = false;
+
         internal ExpectationBuilder(T value)
         {
             Value = value;

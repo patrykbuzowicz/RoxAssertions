@@ -25,9 +25,15 @@ namespace RoxAssertion.Tests
         }
 
         [TestMethod]
-        public void Test_Not_RaiseError_Fails()
+        public void Test_Not_RaiseError()
         {
             (new Action(() => FizBar.SampleMethod())).Expect().Not().RaiseError();
+        }
+
+        [TestMethod]
+        public void Test_Not_Greater()
+        {
+            (-10).Expect().Not().IsGreater(4);
         }
     }
 }
