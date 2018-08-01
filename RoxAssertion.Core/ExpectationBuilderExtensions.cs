@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace RoxAssertion.Core
@@ -15,9 +16,13 @@ namespace RoxAssertion.Core
             return new ExpectationBuilderProperties<T>(builder.Value);
         }
 
-        public static ExpectationBuilderProperties<T> PropertiesWithout<T>(this ExpectationBuilder<T> builder, Expression<Func<T, object>> selector)
+        public static ExpectationBuilderProperties<T> PropertiesWithout<T>(this ExpectationBuilder<T> builder, params Expression<Func<T, object>>[] selectors)
         {
-            return new ExpectationBuilderProperties<T>(builder.Value);
+            var excludedProperties = selectors
+                .Select(selector => PropertyUtils.ExtractProperty(selector))
+                .Select(property => property.Name)
+                .ToArray();
+            return new ExpectationBuilderProperties<T>(builder.Value, excludedProperties);
         }
         
         public static void Eq(this ExpectationBuilder<int> builder, int expected)

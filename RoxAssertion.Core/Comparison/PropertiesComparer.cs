@@ -9,6 +9,11 @@ namespace RoxAssertion.Core
     {
         public Dictionary<string, DiffPair> Compare(object expected, object received)
         {
+            return Compare(expected, received, Array.Empty<string>());
+        }
+
+        public Dictionary<string, DiffPair> Compare(object expected, object received, string[] excluded)
+        {
             if (expected == null)
                 throw new ArgumentNullException(nameof(expected));
             if (received == null)
@@ -17,7 +22,7 @@ namespace RoxAssertion.Core
             var result = new Dictionary<string, DiffPair>();
             var receivedPropsWithValues = GetPropertiesWithValues(received);
             var expectedPropsWithValues = GetPropertiesWithValues(expected);
-            
+
             foreach (var receivedItem in receivedPropsWithValues)
             {
                 if (expectedPropsWithValues.ContainsKey(receivedItem.Key))
@@ -46,7 +51,7 @@ namespace RoxAssertion.Core
 
             return result;
         }
-        
+
         private Dictionary<string, object> GetPropertiesWithValues(object value)
         {
             return value.GetType()
