@@ -2,7 +2,7 @@
 
 namespace RoxAssertion.Core
 {
-    public class Class1
+    public class ExpectationFailedException : Exception
     {
     }
 }
