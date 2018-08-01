@@ -6,10 +6,5 @@
             : base(value)
         {
         }
-
-        public void Eq(object expected)
-        {
-
-        }
     }
 }
