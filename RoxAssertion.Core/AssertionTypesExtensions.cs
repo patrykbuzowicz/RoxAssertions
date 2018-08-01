@@ -1,12 +1,10 @@
-﻿using System;
-
-namespace RoxAssertion.Core
+﻿namespace RoxAssertion.Core
 {
     public static class AssertionTypesExtensions
     {
         public static ExpectationBuilder<T> Expect<T>(this T value)
         {
-            throw new NotImplementedException();
+            return new ExpectationBuilder<T>(value);
         }
     }
 }
