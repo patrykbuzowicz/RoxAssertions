@@ -5,8 +5,6 @@ namespace RoxAssertion.Core
 {
     public class ExpectationBuilderProperties<T> : ExpectationBuilder<T>
     {
-        private static readonly PropertiesComparer Comparer = new PropertiesComparer();
-
         private ExpectationBuilder<T> _innerBuilder;
 
         internal string[] ExcludedProperties { get; }
@@ -27,7 +25,7 @@ namespace RoxAssertion.Core
 
         public override void Eq(object expected)
         {
-            var comparisonResult = Comparer.Compare(Value, expected, ExcludedProperties);
+            var comparisonResult = PropertiesComparer.Instance.Compare(Value, expected, ExcludedProperties);
             var areEqual = !comparisonResult.Any();
 
             if (!areEqual ^ IsNegated)

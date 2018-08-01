@@ -7,6 +7,8 @@ namespace RoxAssertion.Core
 {
     internal class PropertiesComparer
     {
+        public static readonly PropertiesComparer Instance = new PropertiesComparer();
+
         public Dictionary<string, DiffPair> Compare(object expected, object received)
         {
             return Compare(expected, received, Array.Empty<string>());
