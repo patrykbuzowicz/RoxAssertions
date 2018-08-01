@@ -24,33 +24,5 @@ namespace RoxAssertion.Core
                 .ToArray();
             return new ExpectationBuilderProperties<T>(builder, excludedProperties);
         }
-        
-        public static void Eq(this ExpectationBuilder<int> builder, int expected)
-        {
-            if (!builder.Value.Equals(expected) ^ builder.IsNegated)
-                throw new ExpectationFailedException($"Expected to receive \"{expected}\", received \"{builder.Value}\" instead");
-        }
-
-        public static void IsGreater(this ExpectationBuilder<int> builder, int expected)
-        {
-            if (builder.Value <= expected ^ builder.IsNegated)
-                throw new ExpectationFailedException($"Expected to receive value greater than \"{expected}\", received \"{builder.Value}\" which is less or equal");
-        }
-
-        public static void RaiseError(this ExpectationBuilder<Action> builder)
-        {
-            bool result;
-            try
-            {
-                builder.Value.Invoke();
-                result = false;
-            }
-            catch
-            {
-                result = true;
-            }
-
-            builder.Process(result, "Expected action to fail");
-        }
     }
 }

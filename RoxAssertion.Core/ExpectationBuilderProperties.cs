@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Linq;
 
 namespace RoxAssertion.Core
 {
     public class ExpectationBuilderProperties<T> : ExpectationBuilder<T>
     {
+        private static readonly PropertiesComparer Comparer = new PropertiesComparer();
+
         private ExpectationBuilder<T> _innerBuilder;
 
         internal string[] ExcludedProperties { get; }
@@ -20,6 +23,15 @@ namespace RoxAssertion.Core
         {
             _innerBuilder = builder;
             ExcludedProperties = excludedProperties;
+        }
+
+        public override void Eq(object expected)
+        {
+            var comparisonResult = Comparer.Compare(Value, expected, ExcludedProperties);
+            var areEqual = !comparisonResult.Any();
+
+            if (!areEqual ^ IsNegated)
+                throw new ExpectationFailedException($"Expected properties {(IsNegated ? "not" : "")} to be equal");
         }
     }
 }

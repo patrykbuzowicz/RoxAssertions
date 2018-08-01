@@ -11,10 +11,10 @@
             Value = value;
         }
 
-        internal virtual void Process(bool result, string message)
+        public virtual void Eq(object expected)
         {
-            if (!result)
-                throw new ExpectationFailedException(message);
+            if (!Value.Equals(expected) ^ IsNegated)
+                throw new ExpectationFailedException($"Expected {(IsNegated ? "not " : "")}to receive \"{expected}\", received \"{Value}\" instead");
         }
     }
 }
