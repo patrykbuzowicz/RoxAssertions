@@ -10,21 +10,16 @@ namespace RoxAssertion.Core
             return new ExpectationBuilderNegated<T>(builder.Value);
         }
 
-        public static ExpectationBuilder<T> Properties<T>(this ExpectationBuilder<T> value)
+        public static ExpectationBuilderProperties<T> Properties<T>(this ExpectationBuilder<T> builder)
         {
-            throw new NotImplementedException();
+            return new ExpectationBuilderProperties<T>(builder.Value);
         }
 
-        public static ExpectationBuilder<T> PropertiesWithout<T>(this ExpectationBuilder<T> value, Expression<Func<T, object>> selector)
+        public static ExpectationBuilderProperties<T> PropertiesWithout<T>(this ExpectationBuilder<T> builder, Expression<Func<T, object>> selector)
         {
-            throw new NotImplementedException();
+            return new ExpectationBuilderProperties<T>(builder.Value);
         }
-
-        public static void Eq<T>(this ExpectationBuilder<T> value, object expected)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public static void Eq(this ExpectationBuilder<int> builder, int expected)
         {
             builder.Process(builder.Value.Equals(expected), $"Expected to receive \"{expected}\", received \"{builder.Value}\" instead");
