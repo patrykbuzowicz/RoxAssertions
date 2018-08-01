@@ -11,7 +11,7 @@ namespace RoxAssertion.Core
             var comparisonResult = Comparer.Compare(builder.Value, expected, builder.ExcludedProperties);
             var areEqual = !comparisonResult.Any();
             // TODO include diff result in message
-            builder.Process(areEqual, "Expected properties to be equal");
+            builder.Process(areEqual ^ builder.IsNegated, "Expected properties to be equal");
         }
     }
 }
