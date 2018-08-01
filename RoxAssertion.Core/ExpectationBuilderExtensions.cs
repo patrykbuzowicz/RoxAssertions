@@ -35,9 +35,20 @@ namespace RoxAssertion.Core
             builder.Process(builder.Value > expected, $"Expected to receive value greater than \"{expected}\", received \"{builder.Value}\" which is less or equal");
         }
 
-        public static void RaiseError(this ExpectationBuilder<Action> value)
+        public static void RaiseError(this ExpectationBuilder<Action> builder)
         {
-            throw new NotImplementedException();
+            bool result;
+            try
+            {
+                builder.Value.Invoke();
+                result = false;
+            }
+            catch
+            {
+                result = true;
+            }
+
+            builder.Process(result, "Expected action to fail");
         }
     }
 }
