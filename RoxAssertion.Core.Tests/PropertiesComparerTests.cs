@@ -107,5 +107,29 @@ namespace RoxAssertion.Core.Tests
 
             Assert.AreEqual(0, result.Count);
         }
+
+        [TestMethod]
+        public void Given_SinglePropertyNotEqual_DifferentPropertyExcluded_Expect_EmptyResult()
+        {
+            var result = _subject.Compare(
+                new { IntProp = 4, StrProp = "test" },
+                new { IntProp = 3, StrProp = "test" },
+                new[] { "IntProp" });
+
+            Assert.AreEqual(0, result.Count);
+        }
+
+        [TestMethod]
+        public void Given_SinglePropertyNotEqual_OtherPropertyExcluded_Expect_EmptyResult()
+        {
+            var result = _subject.Compare(
+                new { IntProp = 4, StrProp = "test" },
+                new { IntProp = 3, StrProp = "test" },
+                new[] { "StrProp" });
+
+            CollectionAssert.AreEquivalent(new Dictionary<string, DiffPair> {
+                { "IntProp", new DiffPair(4, 3) }
+            }, result);
+        }
     }
 }

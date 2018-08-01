@@ -20,8 +20,8 @@ namespace RoxAssertion.Core
                 throw new ArgumentNullException(nameof(received));
 
             var result = new Dictionary<string, DiffPair>();
-            var receivedPropsWithValues = GetPropertiesWithValues(received);
-            var expectedPropsWithValues = GetPropertiesWithValues(expected);
+            var receivedPropsWithValues = GetPropertiesWithValues(received, excluded);
+            var expectedPropsWithValues = GetPropertiesWithValues(expected, excluded);
 
             foreach (var receivedItem in receivedPropsWithValues)
             {
@@ -52,10 +52,11 @@ namespace RoxAssertion.Core
             return result;
         }
 
-        private Dictionary<string, object> GetPropertiesWithValues(object value)
+        private Dictionary<string, object> GetPropertiesWithValues(object value, string[] excluded)
         {
             return value.GetType()
                 .GetProperties()
+                .Where(property => !excluded.Contains(property.Name))
                 .ToDictionary(property => property.Name, property => property.GetValue(value));
         }
     }
