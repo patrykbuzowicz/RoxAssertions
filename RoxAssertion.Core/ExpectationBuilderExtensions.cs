@@ -5,9 +5,9 @@ namespace RoxAssertion.Core
 {
     public static class ExpectationBuilderExtensions
     {
-        public static ExpectationBuilder<T> Not<T>(this ExpectationBuilder<T> value)
+        public static ExpectationBuilder<T> Not<T>(this ExpectationBuilder<T> builder)
         {
-            throw new NotImplementedException();
+            return new ExpectationBuilderNegated<T>(builder.Value);
         }
 
         public static ExpectationBuilder<T> Properties<T>(this ExpectationBuilder<T> value)
